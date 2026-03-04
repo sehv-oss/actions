@@ -1,0 +1,18 @@
+name: Setup Node.js and pnpm
+description: A GitHub Action to set up Node.js, pnpm and install dependencies in your workflow. Depends on "packageManager" in package.json (corepack) and ".nvmrc" file for Node.js version.
+
+runs:
+  using: composite
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: Setup Node.js and cache pnpm dependencies
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: .nvmrc
+        cache: pnpm
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile

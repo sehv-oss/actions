@@ -1,0 +1,37 @@
+name: Lint using pnpm
+description: A GitHub Action to run linting scripts for a project using pnpm.
+
+inputs:
+  cspell:
+    description: Whether CSpell should be run
+    type: boolean
+    default: true
+    required: false
+  prettier:
+    description: Whether Prettier should be run
+    type: boolean
+    default: true
+    required: false
+  eslint:
+    description: Whether ESLint should be run
+    type: boolean
+    default: true
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - if: ${{ inputs.cspell == 'true' }}
+      name: CSpell
+      shell: bash
+      run: pnpm lint:cspell
+
+    - if: ${{ inputs.prettier == 'true' }}
+      name: Prettier
+      shell: bash
+      run: pnpm lint:prettier
+
+    - if: ${{ inputs.eslint == 'true' }}
+      name: ESLint
+      shell: bash
+      run: pnpm lint:eslint

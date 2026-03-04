@@ -1,0 +1,8 @@
+name: Checkout Repository
+description: A GitHub Action to check out the repository in your workflow. Uses actions/checkout to clone the repository and set up the working directory for subsequent steps in the workflow. This action is typically used at the beginning of a workflow to ensure that the code is available for build, test, and deployment steps.
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v6

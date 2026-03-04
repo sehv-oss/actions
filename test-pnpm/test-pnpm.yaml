@@ -1,0 +1,19 @@
+name: Setup and Test using pnpm
+description: A GitHub Action to set up the environment and run tests for a project using pnpm.
+
+inputs:
+  test-setup:
+    description: Whether the test environment should be set up before running tests
+    type: boolean
+    default: true
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - if: ${{ inputs.test-setup == 'true' }}
+      name: Setup test environment
+      run: pnpm test:setup
+
+    - name: Run tests
+      run: pnpm test

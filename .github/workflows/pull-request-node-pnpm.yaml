@@ -1,0 +1,49 @@
+name: Pull Request Node.js and pnpm
+description: A GitHub Actions workflow to build, lint and test a Node.js project using pnpm when a pull request is opened or updated. The workflow checks out the repository, sets up the Node.js environment with pnpm, and runs the build, lint and test scripts defined in package.json.
+
+on:
+  pull_request:
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: sehv-oss/actions/checkout-repository@main
+
+      - name: Setup environment
+        uses: sehv-oss/actions/setup-node-pnpm@main
+
+      - name: Run build
+        run: pnpm build
+
+  lint:
+    name: Lint
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: sehv-oss/actions/checkout-repository@main
+
+      - name: Setup environment
+        uses: sehv-oss/actions/setup-node-pnpm@main
+
+      - name: Run lints
+        uses: sehv-oss/actions/lint-pnpm@main
+
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: sehv-oss/actions/checkout-repository@main
+
+      - name: Setup environment
+        uses: sehv-oss/actions/setup-node-pnpm@main
+
+      - name: Setup and Run tests
+        uses: sehv-oss/actions/test-pnpm@main
