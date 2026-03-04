@@ -13,7 +13,9 @@ runs:
   steps:
     - if: ${{ inputs.test-setup == 'true' }}
       name: Setup test environment
+      shell: bash
       run: pnpm test:setup
 
     - name: Run tests
+      shell: bash
       run: pnpm test
