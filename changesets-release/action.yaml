@@ -26,3 +26,4 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
         NPM_TOKEN: ${{ inputs.registry-token }}
+        NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
