@@ -3,7 +3,11 @@ description: A GitHub Action to set up Node.js, pnpm and install dependencies in
 
 inputs:
   registry-url:
-    description: Optional registry URL to use for pnpm install
+    description: Optional registry URL for publishing packages
+    required: false
+    default: ''
+  scope:
+    description: Optional scope for publishing packages
     required: false
     default: ''
 
@@ -19,6 +23,7 @@ runs:
         node-version-file: .nvmrc
         cache: pnpm
         registry-url: ${{ inputs.registry-url }}
+        scope: ${{ inputs.scope }}
 
     - name: Install dependencies
       shell: bash

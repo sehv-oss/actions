@@ -65,6 +65,7 @@ jobs:
         uses: sehv-oss/actions/setup-node-pnpm@main
         with:
           registry-url: https://registry.npmjs.org
+          scope: '@sehv-oss'
 
       - name: Release
         uses: sehv-oss/actions/changesets-release@main
