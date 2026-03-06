@@ -74,7 +74,7 @@ jobs:
           EOF
 
       - name: Release
-        uses: sehv-oss/actions/changeset-release@main
+        uses: sehv-oss/actions/changesets-release@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           registry-token: ${{ secrets.NPM_TOKEN }}

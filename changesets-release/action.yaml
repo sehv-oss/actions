@@ -1,4 +1,4 @@
-name: Changeset Release
+name: Changesets Release
 description: A GitHub Action to create version PRs or publish packages to npm using Changesets. Handles npm authentication and integrates with the Changesets GitHub Action.
 
 inputs:
