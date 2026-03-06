@@ -63,15 +63,8 @@ jobs:
 
       - name: Setup environment
         uses: sehv-oss/actions/setup-node-pnpm@main
-
-      - name: Creating .npmrc
-        shell: bash
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-          //registry.npmjs.org/:_authToken=$NPM_TOKEN
-          EOF
+        with:
+          registry-url: https://registry.npmjs.org
 
       - name: Release
         uses: sehv-oss/actions/changesets-release@main
