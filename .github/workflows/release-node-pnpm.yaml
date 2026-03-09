@@ -67,6 +67,9 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: "@sehv-oss"
 
+      - name: Run build
+        run: pnpm build
+
       - name: Release
         uses: sehv-oss/actions/changesets-release@main
         with:
