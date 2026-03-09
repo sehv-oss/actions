@@ -1,0 +1,34 @@
+name: Publish Node.js and pnpm
+description: This workflow handles the publish process for Node.js and pnpm projects.
+
+on:
+  workflow_call:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    # Only runs when a "chore: version packages" PR is merged (not just closed)
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'chore: version packages')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: sehv-oss/actions/checkout-repository@main
+
+      - name: Setup environment
+        uses: sehv-oss/actions/setup-node-pnpm@main
+        with:
+          registry-url: https://registry.npmjs.org
+          scope: "@sehv-oss"
+
+      - name: Run build
+        run: pnpm build
+
+      - name: Publish
+        uses: sehv-oss/actions/changesets-release@main
+        with:
+          publish-command: pnpm changeset:publish
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          registry-token: ${{ secrets.NPM_TOKEN }}
