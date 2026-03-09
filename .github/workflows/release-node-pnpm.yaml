@@ -65,12 +65,12 @@ jobs:
         uses: sehv-oss/actions/setup-node-pnpm@main
         with:
           registry-url: https://registry.npmjs.org
-          scope: '@sehv-oss'
+          scope: "@sehv-oss"
 
       - name: Release
         uses: sehv-oss/actions/changesets-release@main
         with:
+          version-command: pnpm changeset:version
+          publish-command: pnpm changeset:publish
           github-token: ${{ secrets.GITHUB_TOKEN }}
           registry-token: ${{ secrets.NPM_TOKEN }}
-          publish-command: pnpm changeset publish
-          version-command: pnpm changeset version

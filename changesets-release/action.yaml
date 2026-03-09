@@ -23,6 +23,8 @@ runs:
       with:
         publish: ${{ inputs.publish-command }}
         version: ${{ inputs.version-command }}
+        commit: "ci(changesets): version packages"
+        title: "ci(changesets): version packages"
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
         NPM_TOKEN: ${{ inputs.registry-token }}
