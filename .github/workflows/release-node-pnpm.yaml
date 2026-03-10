@@ -20,12 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: ./checkout-repository
+        uses: sehv-oss/actions/checkout-repository@main
         with:
           branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: ./setup-node-pnpm
+        uses: sehv-oss/actions/setup-node-pnpm@main
 
       - name: Run build
         run: pnpm build
@@ -36,15 +36,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: ./checkout-repository
+        uses: sehv-oss/actions/checkout-repository@main
         with:
           branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: ./setup-node-pnpm
+        uses: sehv-oss/actions/setup-node-pnpm@main
 
       - name: Run lints
-        uses: ./lint-pnpm
+        uses: sehv-oss/actions/lint-pnpm@main
 
   test:
     name: Test
@@ -52,15 +52,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: ./checkout-repository
+        uses: sehv-oss/actions/checkout-repository@main
         with:
           branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: ./setup-node-pnpm
+        uses: sehv-oss/actions/setup-node-pnpm@main
 
       - name: Setup and run tests
-        uses: ./test-pnpm
+        uses: sehv-oss/actions/test-pnpm@main
 
   release:
     name: Release
@@ -71,18 +71,18 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout repository
-        uses: ./checkout-repository
+        uses: sehv-oss/actions/checkout-repository@main
         with:
           branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: ./setup-node-pnpm
+        uses: sehv-oss/actions/setup-node-pnpm@main
         with:
           registry-url: https://registry.npmjs.org
           scope: "@sehv-oss"
 
       - name: Changesets version
-        uses: ./changesets
+        uses: sehv-oss/actions/changesets@main
         with:
           version-command: pnpm changeset:version
           github-token: ${{ secrets.GITHUB_TOKEN }}
