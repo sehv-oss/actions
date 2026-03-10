@@ -26,10 +26,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss-actions/checkout-repository@main
+        uses: sehv-oss/actions/checkout-repository@main
 
       - name: Setup environment
-        uses: sehv-oss-actions/setup-node-pnpm@main
+        uses: sehv-oss/actions/setup-node-pnpm@main
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
