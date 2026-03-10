@@ -3,12 +3,6 @@ description: This workflow handles the release process for Node.js and pnpm proj
 
 on:
   workflow_call:
-    inputs:
-      branch:
-        description: The branch to check out
-        type: string
-        default: ""
-        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,8 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: sehv-oss/actions/checkout-repository@main
-        with:
-          branch: ${{ inputs.branch }}
 
       - name: Setup environment
         uses: sehv-oss/actions/setup-node-pnpm@main
@@ -37,8 +29,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: sehv-oss/actions/checkout-repository@main
-        with:
-          branch: ${{ inputs.branch }}
 
       - name: Setup environment
         uses: sehv-oss/actions/setup-node-pnpm@main
@@ -53,8 +43,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: sehv-oss/actions/checkout-repository@main
-        with:
-          branch: ${{ inputs.branch }}
 
       - name: Setup environment
         uses: sehv-oss/actions/setup-node-pnpm@main
@@ -72,8 +60,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: sehv-oss/actions/checkout-repository@main
-        with:
-          branch: ${{ inputs.branch }}
 
       - name: Setup environment
         uses: sehv-oss/actions/setup-node-pnpm@main
