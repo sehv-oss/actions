@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
         with:
           registry-url: https://registry.npmjs.org
           scope: "@sehv-oss"
@@ -25,8 +25,8 @@ jobs:
       - name: Run build
         run: pnpm build
 
-      - name: Publish
-        uses: sehv-oss/actions/changesets-release@main
+      - name: Changesets publish
+        uses: ./changesets
         with:
           publish-command: pnpm changeset:publish
           github-token: ${{ secrets.GITHUB_TOKEN }}

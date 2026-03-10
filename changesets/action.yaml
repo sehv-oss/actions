@@ -1,4 +1,4 @@
-name: Changesets Release
+name: Changesets
 description: A GitHub Action to create version PRs or publish packages to npm using Changesets. Handles npm authentication and integrates with the Changesets GitHub Action.
 
 inputs:
@@ -7,13 +7,16 @@ inputs:
     required: true
   registry-token:
     description: Registry auth token for publishing packages
-    required: true
+    required: false
+    default: ""
   publish-command:
     description: Command to run for publishing packages
-    required: true
+    required: false
+    default: ""
   version-command:
     description: Command to run for versioning packages
-    required: true
+    required: false
+    default: ""
 
 runs:
   using: composite

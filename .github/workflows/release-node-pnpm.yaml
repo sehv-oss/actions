@@ -3,6 +3,12 @@ description: This workflow handles the release process for Node.js and pnpm proj
 
 on:
   workflow_call:
+    inputs:
+      branch:
+        description: The branch to check out
+        type: string
+        default: ""
+        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,10 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
+        with:
+          branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
 
       - name: Run build
         run: pnpm build
@@ -28,13 +36,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
+        with:
+          branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
 
       - name: Run lints
-        uses: sehv-oss/actions/lint-pnpm@main
+        uses: ./lint-pnpm
 
   test:
     name: Test
@@ -42,13 +52,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
+        with:
+          branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
 
-      - name: Setup and Run tests
-        uses: sehv-oss/actions/test-pnpm@main
+      - name: Setup and run tests
+        uses: ./test-pnpm
 
   release:
     name: Release
@@ -59,21 +71,18 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
+        with:
+          branch: ${{ inputs.branch }}
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
         with:
           registry-url: https://registry.npmjs.org
           scope: "@sehv-oss"
 
-      - name: Run build
-        run: pnpm build
-
-      - name: Release
-        uses: sehv-oss/actions/changesets-release@main
+      - name: Changesets version
+        uses: ./changesets
         with:
           version-command: pnpm changeset:version
-          publish-command: pnpm changeset:publish
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          registry-token: ${{ secrets.NPM_TOKEN }}

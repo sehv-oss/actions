@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
 
       - name: Run build
         run: pnpm build
@@ -28,13 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
 
       - name: Run lints
-        uses: sehv-oss/actions/lint-pnpm@main
+        uses: ./lint-pnpm
 
   test:
     name: Test
@@ -42,10 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: sehv-oss/actions/checkout-repository@main
+        uses: ./checkout-repository
 
       - name: Setup environment
-        uses: sehv-oss/actions/setup-node-pnpm@main
+        uses: ./setup-node-pnpm
 
-      - name: Setup and Run tests
-        uses: sehv-oss/actions/test-pnpm@main
+      - name: Setup and run tests
+        uses: ./test-pnpm

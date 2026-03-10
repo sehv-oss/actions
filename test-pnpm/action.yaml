@@ -12,10 +12,10 @@ runs:
   using: composite
   steps:
     - if: ${{ inputs.test-setup == 'true' }}
-      name: Setup test environment
+      name: Tests environment
       shell: bash
       run: pnpm test:setup
 
-    - name: Run tests
+    - name: Tests
       shell: bash
       run: pnpm test
