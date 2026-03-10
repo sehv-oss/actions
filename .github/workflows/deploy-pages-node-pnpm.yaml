@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+on:
+  workflow_call:
+    inputs:
+      build-command:
+        description: The command to run to build the project
+        type: string
+        required: true
+      output-path:
+        description: Path to the build output directory
+        type: string
+        required: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: sehv-oss-actions/checkout-repository@main
+
+      - name: Setup environment
+        uses: sehv-oss-actions/setup-node-pnpm@main
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build command
+        shell: bash
+        run: ${{ inputs.build-command }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ inputs.output-path }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
