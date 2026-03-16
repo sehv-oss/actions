@@ -4,10 +4,6 @@ description: A GitHub Actions workflow to build, lint and test a Node.js project
 on:
   workflow_call:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     name: Build

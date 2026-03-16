@@ -4,10 +4,6 @@ description: This workflow handles the publish process for Node.js and pnpm proj
 on:
   workflow_call:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   publish:
     name: Publish
