@@ -3,6 +3,27 @@ description: This workflow handles the release process for Node.js and pnpm proj
 
 on:
   workflow_call:
+    inputs:
+      cspell:
+        description: Whether CSpell should be run
+        type: boolean
+        default: true
+        required: false
+      prettier:
+        description: Whether Prettier should be run
+        type: boolean
+        default: true
+        required: false
+      eslint:
+        description: Whether ESLint should be run
+        type: boolean
+        default: true
+        required: false
+      skip-test:
+        description: Whether tests should be skipped
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   build:
@@ -21,6 +42,7 @@ jobs:
   lint:
     name: Lint
     needs: build
+    if: ${{ inputs.cspell || inputs.prettier || inputs.eslint }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -31,10 +53,15 @@ jobs:
 
       - name: Run lints
         uses: sehv-oss/actions/lint-pnpm@main
+        with:
+          cspell: ${{ inputs.cspell }}
+          prettier: ${{ inputs.prettier }}
+          eslint: ${{ inputs.eslint }}
 
   test:
     name: Test
     needs: build
+    if: ${{ !inputs.skip-test }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -49,6 +76,7 @@ jobs:
   release:
     name: Release
     needs: [build, lint, test]
+    if: ${{ !failure() && !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
