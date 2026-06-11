@@ -26,8 +26,8 @@ runs:
       with:
         publish: ${{ inputs.publish-command }}
         version: ${{ inputs.version-command }}
-        commit: "chore: version packages"
-        title: "chore: version packages"
+        commit: "chore: release"
+        title: "chore: release"
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
         NPM_TOKEN: ${{ inputs.registry-token }}
